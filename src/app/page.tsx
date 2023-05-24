@@ -1,87 +1,43 @@
 "use client";
 
-import { Steps } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Anchor } from "antd";
 import { Dummies } from "../../components/Dummies";
 
 export default function Home() {
-  const [current, setCurrent] = useState(0);
-  const description = "This is a fuackin' dummy txt!";
-
-  //Detect if the sh* is scrolling 😻  NDARENZE NDQ
-
-  const div1Ref = useRef(null);
-  const div2Ref = useRef(null);
-  const div3Ref = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = (event: any) => {
-      if (event.target === div1Ref.current) {
-        console.log("div 1 scrolls");
-        setCurrent(0);
-      } else if (event.target === div2Ref.current) {
-        console.log("div 2 scrolls");
-        setCurrent(1);
-      } else if (event.target === div3Ref.current) {
-        console.log("div 3 scrolls");
-        setCurrent(2);
-      }
-    };
-
-    div1Ref.current.addEventListener("scroll", handleScroll);
-    div2Ref.current.addEventListener("scroll", handleScroll);
-    div3Ref.current.addEventListener("scroll", handleScroll);
-
-    return () => {
-      div1Ref.current.removeEventListener("scroll", handleScroll);
-      div2Ref.current.removeEventListener("scroll", handleScroll);
-      div3Ref.current.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <div className="flex justify-between gap-4">
-      <div className="min-w-fit sticky top-0 h-full">
-        <Steps
-          current={current}
-          direction="vertical"
+    <div className="bg-gray-400 flex justify-between gap-4 ">
+      <div>
+        <Anchor
           items={[
             {
-              title: "Step 1",
-              description,
+              key: "part-1",
+              href: "#part-1",
+              title: "Step ya 1",
             },
             {
-              title: "Step 2",
-              description,
+              key: "part-2",
+              href: "#part-2",
+              title: "Step ya 2",
             },
             {
-              title: "Step 3",
-              description,
+              key: "part-3",
+              href: "#part-3",
+              title: "Step ya 3",
             },
           ]}
         />
       </div>
-      3
-      <div
-        className="bg-red-500"
-        ref={div1Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[0]?.content}
-      </div>
-      <div
-        className="bg-green-500"
-        ref={div2Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[1]?.content}
-      </div>
-      <div
-        className="bg-yellow-400"
-        ref={div3Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[2]?.content}
+
+      <div className="h-full">
+        <div id="part-1" className="bg-orange-200">
+          {Dummies[0]?.content}
+        </div>
+        <div id="part-2" className="bg-green-200">
+          {Dummies[1]?.content}
+        </div>
+        <div id="part-3" className="bg-blue-300">
+          {Dummies[2]?.content}
+        </div>
       </div>
     </div>
   );
