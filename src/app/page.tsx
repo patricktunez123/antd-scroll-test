@@ -28,11 +28,11 @@ const ExperienceSection = () => {
   return (
     <div>
       <div className="flex justify-between gap-5">
-        {/* Hano remember the hieght of the div must be 100vh - the top size (ex: the header size). Murakoze : 😃  */}
         <div className="min-w-fit sticky top-0 h-full">
           <Steps direction="vertical" current={active} items={StepItems} />
         </div>
         <div className="flex flex-col parent-div" ref={parentRef}>
+          {/* Hano remember the hieght of the div must be 100vh - the top size (ex: the header size). Murakoze : 😃  */}
           <div className="bg-red-100 h-screen child-div" ref={child1Ref}>
             {Dummies[0]?.content}
           </div>
