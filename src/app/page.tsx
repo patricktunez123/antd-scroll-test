@@ -1,88 +1,54 @@
 "use client";
 
 import { Steps } from "antd";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { Dummies } from "../../components/Dummies";
+import { StepItems } from "../../components/StepItems";
 
-export default function Home() {
-  const [current, setCurrent] = useState(0);
-  const description = "This is a fuackin' dummy txt!";
-
-  //Detect if the sh* is scrolling 😻  NDARENZE NDQ
-
-  const div1Ref = useRef(null);
-  const div2Ref = useRef(null);
-  const div3Ref = useRef(null);
+const ExperienceSection = () => {
+  const [active, setActive] = useState(0);
+  const parentRef = useRef(null);
+  const [child1Ref, child1InView] = useInView();
+  const [child2Ref, child2InView] = useInView();
+  const [child3Ref, child3InView] = useInView();
 
   useEffect(() => {
-    const handleScroll = (event: any) => {
-      if (event.target === div1Ref.current) {
-        console.log("div 1 scrolls");
-        setCurrent(0);
-      } else if (event.target === div2Ref.current) {
-        console.log("div 2 scrolls");
-        setCurrent(1);
-      } else if (event.target === div3Ref.current) {
-        console.log("div 3 scrolls");
-        setCurrent(2);
-      }
-    };
-
-    div1Ref.current.addEventListener("scroll", handleScroll);
-    div2Ref.current.addEventListener("scroll", handleScroll);
-    div3Ref.current.addEventListener("scroll", handleScroll);
-
-    return () => {
-      div1Ref.current.removeEventListener("scroll", handleScroll);
-      div2Ref.current.removeEventListener("scroll", handleScroll);
-      div3Ref.current.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    if (child1InView) {
+      setActive(0);
+    } else if (child2InView) {
+      setActive(1);
+    } else if (child3InView) {
+      setActive(2);
+    } else {
+      setActive(0);
+    }
+  }, [child1InView, child2InView, child3InView]);
 
   return (
-    <div className="flex justify-between gap-4">
-      <div className="min-w-fit sticky top-0 h-full">
-        <Steps
-          current={current}
-          direction="vertical"
-          items={[
-            {
-              title: "Step 1",
-              description,
-            },
-            {
-              title: "Step 2",
-              description,
-            },
-            {
-              title: "Step 3",
-              description,
-            },
-          ]}
-        />
+    <div>
+      <div className="flex justify-between gap-5">
+        <div className="min-w-fit sticky top-0 h-full">
+          <Steps direction="vertical" current={active} items={StepItems} />
+        </div>
+        <div className="flex flex-col parent-div" ref={parentRef}>
+          <div className="bg-red-100 h-screen child-div" ref={child1Ref}>
+            {Dummies[0]?.content}
+          </div>
+          <div className="bg-green-100 h-screen child-div" ref={child2Ref}>
+            {Dummies[1]?.content}
+          </div>
+          <div className="bg-yellow-100 h-screen child-div" ref={child3Ref}>
+            {Dummies[2]?.content}
+          </div>
+        </div>
       </div>
-      3
-      <div
-        className="bg-red-500"
-        ref={div1Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[0]?.content}
-      </div>
-      <div
-        className="bg-green-500"
-        ref={div2Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[1]?.content}
-      </div>
-      <div
-        className="bg-yellow-400"
-        ref={div3Ref}
-        style={{ height: "500px", overflow: "scroll" }}
-      >
-        {Dummies[2]?.content}
+
+      <div className="bg-green-950">
+        <span> {Dummies[3]?.content}</span>
       </div>
     </div>
   );
-}
+};
+
+export default ExperienceSection;
